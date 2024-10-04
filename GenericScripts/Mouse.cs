@@ -6,20 +6,11 @@ using UnityEngine.InputSystem;
 
 public class Mouse : MonoBehaviour
 {
-    Vector3 mousePos;
     [SerializeField] Transform target; //Assign to the object you want to rotate
-    Vector3 object_pos;
-    float angle;
-
-
     float lookAction;
-
-
-
     private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.None;
-
     }
     public void OnlookAt(InputAction.CallbackContext context) {
         lookAction = context.ReadValue<float>();
@@ -34,13 +25,6 @@ public class Mouse : MonoBehaviour
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         target.transform.rotation = Quaternion.Slerp(target.transform.rotation, rotation, 10 * Time.deltaTime);
-    }
-
-    private void Update ()
-    {
-      
-        
-
     }
 
     private void FixedUpdate() {
