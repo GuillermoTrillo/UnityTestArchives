@@ -28,7 +28,7 @@ public class lightMovement : MonoBehaviour
     float coyoteTimeCounter; 
 
     //*dash Variables
-    float dashAmount = 3;
+    float amountOfDashes = 3;
     
     float dashVelocity = 90f;
     float dashTime = 0.10f;
@@ -119,7 +119,8 @@ public class lightMovement : MonoBehaviour
         isDashing = false;
         tr.emitting = false;
         coyoteTimeCounter = 0;
-
+        
+        amountOfDashes--;
           if( !IsGrounded()) {
             yield return new WaitUntil(() => IsGrounded() == true);
         }
@@ -130,7 +131,6 @@ public class lightMovement : MonoBehaviour
         Debug.Log("cooldown off");
         allowToDash = true;
     }
-
     //* casts a raycast under the player in the form of a box, to check if he's grounded or not
     public bool IsGrounded() {
         if (Physics2D.BoxCast(transform.position, boxSizeLight, 0, -transform.up, castDistanceLight, groundLayerLight)) {
@@ -153,34 +153,37 @@ public class lightMovement : MonoBehaviour
             accelerationTime = 0.6f;
             coyoteTimeCounter -= Time.deltaTime;
         }
+     
+ 
     }
     //* Fixed Update does all the calls for the movement functions, as they work with physics.
     private void FixedUpdate() {
-        
-        
+        if(allowToDash == true && isDashing == false && amountOfDashes < 3) {
+            amountOfDashes = amountOfDashes + 0.05f;
+        }
+
         // if player is dashing, they can not move nor try to dash again.
-        if(isDashing == true && jumpAction > 0 && IsGrounded()) {
+        if(isDashing == false && jumpAction > 0 && coyoteTimeCounter > 0) {
+            Jump();
+        }
+        else if(isDashing == true && jumpAction > 0 && coyoteTimeCounter > 0) {
             StopCoroutine(Dash());
             StartCoroutine(DashJump());
             return;
         } 
+        
         else if (isDashing == true){
             return;
         }
 
-        if(jumpAction > 0 && coyoteTimeCounter > 0) {
-            Jump();
-        }
+        
         if(!isDashing && !isJumping) {
             Move();
         }
         
-       
-        if(dashAction > 0 && allowToDash == true && moveAction.x != 0) {
+        if(dashAction > 0 && allowToDash == true && moveAction.x != 0 && amountOfDashes >= 1) {
             StartCoroutine(Dash());
         }
     }
 
 }
-
-
