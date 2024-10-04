@@ -79,7 +79,6 @@ public class lightMovement : MonoBehaviour
             speed = maximumSpeed;
         }
         Vector2 velocity = new Vector2(speed * moveAction.x * Time.deltaTime, rb2D.velocity.y);
-
         rb2D.velocity = velocity;    
         
         }  
@@ -89,6 +88,7 @@ public class lightMovement : MonoBehaviour
         rb2D.velocity = new Vector2(rb2D.velocity.x, jumpHeight);
         // rb2D.AddForce(new Vector2(rb2D.velocity.x, jumpHeight), ForceMode2D.Impulse);
     }    
+    //Suposed to do a especific jump when jumping at the same time that you dash
     private IEnumerator DashJump() {
 
         //StopCoroutine(Dash());
