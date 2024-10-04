@@ -91,11 +91,10 @@ public class lightMovement : MonoBehaviour
     //Suposed to do a especific jump when jumping at the same time that you dash
     private IEnumerator DashJump() {
 
-        //StopCoroutine(Dash());
         allowToDash = false;
         isDashing = true;
         isJumping = true;
-        jumpHeight = 10;
+        jumpHeight = 12;
         dashVelocity = 40f;
         rb2D.velocity = new Vector2(moveAction.x * rb2D.transform.localScale.x * dashVelocity, jumpHeight);
         tr.emitting = true;
@@ -161,6 +160,7 @@ public class lightMovement : MonoBehaviour
         
         // if player is dashing, they can not move nor try to dash again.
         if(isDashing == true && jumpAction > 0 && IsGrounded()) {
+            StopCoroutine(Dash());
             StartCoroutine(DashJump());
             return;
         } 
