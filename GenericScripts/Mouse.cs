@@ -17,7 +17,6 @@ public class Mouse : MonoBehaviour
     }
 
     private void LookAt() {
-    
         Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - target.transform.position;
 
         float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90;
