@@ -7,15 +7,20 @@ using System;
 public class Interact : MonoBehaviour
 {
 
-    public event Action Action;
+    public event Action interactAction;
     float lookAction;
 
-    void onInteraction(InputAction.CallbackContext context) {
+    public void onInteraction(InputAction.CallbackContext context) {
         lookAction = context.ReadValue<float>();
+    }
+
+    public void Interacting() {
+        interactAction?.Invoke();
     }
     // Update is called once per frame
     void Update()
     {
-        
+        if(lookAction > 0){
+        }
     }
 }
