@@ -7,7 +7,7 @@ public class SavePointScript : MonoBehaviour
 {
     public GameObject player;
  private void Update() {
-      Debug.Log("Observer responds");
+      
  }      
     
         
