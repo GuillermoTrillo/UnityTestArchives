@@ -27,8 +27,9 @@ public class Mouse : MonoBehaviour
     }
 
     private void FixedUpdate() {
-          if(lookAction > 0) {
-            LookAt();
-        }
+//          if(lookAction > 0) {
+//          }
+        LookAt();
+
     }
 }
