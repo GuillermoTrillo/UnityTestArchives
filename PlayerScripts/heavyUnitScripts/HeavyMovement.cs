@@ -11,6 +11,7 @@ public class HeavyMovement : MonoBehaviour
     private float castDistance = 0.8f;
     [SerializeField] private LayerMask groundLayer;
 
+
     //*the action was called with the button click
     Vector2 moveAction;
     float jumpAction;
