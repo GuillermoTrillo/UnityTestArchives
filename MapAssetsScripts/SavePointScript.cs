@@ -5,6 +5,8 @@ using System;
 
 public class SavePointScript : MonoBehaviour
 {
+    public GameObject firstPlayer;
+    public GameObject secondPlayer;
  private void OnTriggerEnter2D(Collider2D other) {
         Interact.OnInteraction += delegate ()
         {
@@ -13,6 +15,6 @@ public class SavePointScript : MonoBehaviour
     }   
 
     private void Cock() {
-        Debug.Log("bruh?");
+        Destroy(firstPlayer);
     }
 }
