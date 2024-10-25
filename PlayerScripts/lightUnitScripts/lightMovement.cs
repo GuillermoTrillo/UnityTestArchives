@@ -180,7 +180,7 @@ public class lightMovement : MonoBehaviour
             if(dashAction > 0 && moveAction.x != 0 && amountOfDashes >= 1) {
                 StartCoroutine(Dash());
             }
-            if(amountOfDashes < 3) {
+            if(amountOfDashes < 3 && IsGrounded() != true) {
                 amountOfDashes = amountOfDashes + 0.05f;
             }
         }

@@ -7,20 +7,31 @@ using System;
 public class Interact : MonoBehaviour
 {
 
-    public event Action interactAction;
-    float lookAction;
+    public static event Action OnInteraction;
+    float interactAction;
+    float hasCollision;
 
     public void onInteraction(InputAction.CallbackContext context) {
-        lookAction = context.ReadValue<float>();
+        interactAction = context.ReadValue<float>();
     }
 
     public void Interacting() {
-        interactAction?.Invoke();
+        OnInteraction?.Invoke();
     }
     // Update is called once per frame
+
+  private void OnTriggerEnter2D(Collider2D other) {
+        Debug.Log("NYAHHHHHHH");
+    }
+    private void OnTriggerExit2D(Collider2D other) {
+        Debug.Log("I can't believe it");
+    }
+
     void Update()
     {
-        if(lookAction > 0){
+        Debug.Log(interactAction);
+        if(interactAction > 0 && hasCollision > 0){
+            Interacting();
         }
     }
 }

@@ -5,28 +5,13 @@ using System;
 
 public class SavePointScript : MonoBehaviour
 {
-    public GameObject player;
- private void Update() {
-        Debug.Log("asd");
- }      
-    
-        
-    
-    /*
-    private void Awake()
-    {
-        if (player != null)
+ 
+    private void OnEnable() {
+        Interact.OnInteraction += delegate ()
         {
-            player.interactAction += OnThingHappened;
-        }
+        Debug.Log("bruh?");
+        };   
     }
 
-    private void OnDestroy()
-    {
-        if (player != null)
-        {
-            player.interactAction -= OnThingHappened;
-      }
-    }
-    */
+  
 }
