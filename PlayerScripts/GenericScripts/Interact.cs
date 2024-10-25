@@ -19,17 +19,16 @@ public class Interact : MonoBehaviour
         OnInteraction?.Invoke();
     }
     // Update is called once per frame
-
-  private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("NYAHHHHHHH");
+    private void OnTriggerEnter2D(Collider2D other) {
+        hasCollision = 1;
     }
     private void OnTriggerExit2D(Collider2D other) {
-        Debug.Log("I can't believe it");
+        hasCollision = 0;
     }
 
     void Update()
     {
-        Debug.Log(interactAction);
+        Debug.Log(interactAction + " and "+hasCollision);
         if(interactAction > 0 && hasCollision > 0){
             Interacting();
         }
