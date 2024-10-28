@@ -7,13 +7,14 @@ using UnityEngine.InputSystem;
 public class Mouse : MonoBehaviour
 {
     [SerializeField] Transform target; //Assign to the object you want to rotate
-    float lookAction;
+    float magnetAction;
+
     private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.None;
     }
-    public void OnlookAt(InputAction.CallbackContext context) {
-        lookAction = context.ReadValue<float>();
+    public void OnShootingMagnets(InputAction.CallbackContext context) {
+        magnetAction = context.ReadValue<float>();
     }
 
     private void LookAt() {
@@ -26,9 +27,13 @@ public class Mouse : MonoBehaviour
         target.transform.rotation = Quaternion.Slerp(target.transform.rotation, rotation, 10 * Time.deltaTime);
     }
 
+    private void ShootMagnet() {
+        Debug.Log("asds");
+    }
     private void FixedUpdate() {
-//          if(lookAction > 0) {
-//          }
+        if(magnetAction > 0) {
+            ShootMagnet();
+        }
         LookAt();
 
     }

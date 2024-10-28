@@ -13,8 +13,15 @@ public class SavePointScript : MonoBehaviour
             Cock();
         };
     }   
+    private void OnTriggerExit2D(Collider2D other) {
+        Interact.OnInteraction -= delegate ()
+        {
+            Cock();
+        };
+    }
+
 
     private void Cock() {
-        Destroy(firstPlayer);
+        Debug.Log("asd");
     }
 }
