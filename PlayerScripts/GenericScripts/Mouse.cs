@@ -6,10 +6,11 @@ using UnityEngine.InputSystem;
 
 public class Mouse : MonoBehaviour
 {
-    [SerializeField] GameObject target; //Assign to the object you want to rotate
+    public GameObject target; //Assign to the object you want to rotate
     float magnetAction;
 
     private void Start() {
+                Debug.Log(target);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.None;
     }   
@@ -18,7 +19,6 @@ public class Mouse : MonoBehaviour
     }
 
     private void LookAt() {
-        Debug.Log(target);
         Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - target.transform.position;
 
         float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90;
