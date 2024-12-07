@@ -11,7 +11,7 @@ public class Mouse : MonoBehaviour
 
     float magnetAction;
     public GameObject magnetPrefab;
-    int magnetQuantity = 5;
+    int magnetQuantity = 1;
     
     private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
@@ -30,7 +30,7 @@ public class Mouse : MonoBehaviour
         }
     }
     public void CallingMagnetsBack(InputAction.CallbackContext context) {
-        if(magnetQuantity == 5) {
+        if(magnetQuantity == 1) {
             return;
         }
 
