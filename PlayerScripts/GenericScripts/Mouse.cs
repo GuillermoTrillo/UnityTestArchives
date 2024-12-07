@@ -8,15 +8,36 @@ public class Mouse : MonoBehaviour
 {
     public GameObject target; //Assign to the object you want to rotate
     Quaternion rotation;
+
     float magnetAction;
     public GameObject magnetPrefab;
+    int magnetQuantity = 5;
     
     private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.None;
     }   
+
     public void OnShootingMagnets(InputAction.CallbackContext context) {
-        magnetAction = context.ReadValue<float>();
+        if(magnetQuantity == 0) {
+            return;
+        }
+
+        if (context.performed)
+        {
+            magnetQuantity--;
+            ShootMagnet();
+        }
+    }
+    public void CallingMagnetsBack(InputAction.CallbackContext context) {
+        if(magnetQuantity == 5) {
+            return;
+        }
+
+        if (context.performed)
+        {
+            GetMagnet();
+        }
     }
 
     private void LookAt() {
@@ -30,11 +51,14 @@ public class Mouse : MonoBehaviour
     }
 
     private void ShootMagnet() {
-        Instantiate(magnetPrefab, target.transform.position, rotation);    
+        Instantiate(magnetPrefab, target.transform.position, rotation);
+    }
+     private void GetMagnet() {
+        Debug.Log("Work in progress");
     }
     private void FixedUpdate() {
         if(magnetAction > 0) {
-            ShootMagnet();
+            // ShootMagnet();
         }
         LookAt();
 
