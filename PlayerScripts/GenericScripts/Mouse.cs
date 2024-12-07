@@ -10,7 +10,6 @@ public class Mouse : MonoBehaviour
     float magnetAction;
 
     private void Start() {
-                Debug.Log(target);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.None;
     }   
