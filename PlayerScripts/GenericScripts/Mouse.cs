@@ -7,8 +7,10 @@ using UnityEngine.InputSystem;
 public class Mouse : MonoBehaviour
 {
     public GameObject target; //Assign to the object you want to rotate
+    Quaternion rotation;
     float magnetAction;
-
+    public GameObject magnetPrefab;
+    
     private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.None;
@@ -22,13 +24,13 @@ public class Mouse : MonoBehaviour
 
         float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90;
 
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         target.transform.rotation = Quaternion.Slerp(target.transform.rotation, rotation, 10 * Time.deltaTime);
     }
 
     private void ShootMagnet() {
-        Debug.Log("asds");
+        Instantiate(magnetPrefab, target.transform.position, rotation);    
     }
     private void FixedUpdate() {
         if(magnetAction > 0) {
