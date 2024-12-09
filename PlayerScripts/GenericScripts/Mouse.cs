@@ -11,8 +11,9 @@ public class Mouse : MonoBehaviour
 
     float magnetAction;
     public GameObject magnetPrefab;
-    int magnetQuantity = 1;
-    
+    int magnetQuantity = 5;
+    int magnetAmountCalled = 0;
+    List<GameObject> MagnetList = new List<GameObject>();
     private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.None;
@@ -25,12 +26,11 @@ public class Mouse : MonoBehaviour
 
         if (context.performed)
         {
-            magnetQuantity--;
             ShootMagnet();
         }
     }
     public void CallingMagnetsBack(InputAction.CallbackContext context) {
-        if(magnetQuantity == 1) {
+        if(magnetQuantity == 5) {
             return;
         }
 
@@ -51,15 +51,24 @@ public class Mouse : MonoBehaviour
     }
 
     private void ShootMagnet() {
-        Instantiate(magnetPrefab, target.transform.position, rotation);
+        if(magnetQuantity != 5) {
+            magnetAmountCalled++;
+        }
+        magnetQuantity--;
+        
+        MagnetList.Add(Instantiate(magnetPrefab, target.transform.position, rotation));
     }
      private void GetMagnet() {
-        Debug.Log("Work in progress");
+        Debug.Log(magnetAmountCalled);
+        Destroy(MagnetList[magnetAmountCalled]);
+        magnetQuantity++;
+        if(magnetAmountCalled > 0) {
+            magnetAmountCalled--;
+        }
+        
     }
     private void FixedUpdate() {
-        if(magnetAction > 0) {
-            // ShootMagnet();
-        }
+        
         LookAt();
 
     }
