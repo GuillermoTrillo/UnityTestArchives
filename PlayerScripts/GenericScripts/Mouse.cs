@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
@@ -9,11 +10,9 @@ public class Mouse : MonoBehaviour
     public GameObject target; //Assign to the object you want to rotate
     Quaternion rotation;
 
-    float magnetAction;
     public GameObject magnetPrefab;
     int magnetQuantity = 5;
-    int magnetAmountCalled = 0;
-    List<GameObject> MagnetList = new List<GameObject>();
+    List<GameObject> activeMagnetList = new List<GameObject>();
     private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.None;
@@ -26,7 +25,7 @@ public class Mouse : MonoBehaviour
 
         if (context.performed)
         {
-            ShootMagnet();
+            SpawnMagnet();
         }
     }
     public void CallingMagnetsBack(InputAction.CallbackContext context) {
@@ -36,7 +35,7 @@ public class Mouse : MonoBehaviour
 
         if (context.performed)
         {
-            GetMagnet();
+            DespawnMagnet();
         }
     }
 
@@ -50,23 +49,20 @@ public class Mouse : MonoBehaviour
         target.transform.rotation = Quaternion.Slerp(target.transform.rotation, rotation, 10 * Time.deltaTime);
     }
 
-    private void ShootMagnet() {
-        if(magnetQuantity != 5) {
-            magnetAmountCalled++;
-        }
+    private void SpawnMagnet() {
         magnetQuantity--;
-        
-        MagnetList.Add(Instantiate(magnetPrefab, target.transform.position, rotation));
+        activeMagnetList.Add(Instantiate(magnetPrefab, target.transform.position, rotation));
+        ShootMagnet();
     }
-     private void GetMagnet() {
-        Debug.Log(magnetAmountCalled);
-        Destroy(MagnetList[magnetAmountCalled]);
+        private void ShootMagnet() {
+        GameObject lastSpawned = activeMagnetList.LastOrDefault();
+    }
+     private void DespawnMagnet() {       
+        Destroy(activeMagnetList.LastOrDefault());
+        activeMagnetList.Remove(activeMagnetList.LastOrDefault());
         magnetQuantity++;
-        if(magnetAmountCalled > 0) {
-            magnetAmountCalled--;
-        }
-        
     }
+
     private void FixedUpdate() {
         
         LookAt();
