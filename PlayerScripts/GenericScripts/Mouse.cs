@@ -16,9 +16,10 @@ public class Mouse : MonoBehaviour
 
     public LayerMask magnetLayer;
     private bool isMagnetOnRange = false;
-
+    RaycastHit2D firstMagnetFound;
     private float repelingAction;
     private float attractingAction;
+    public float strengthOfAction = 10;
     private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.None;
@@ -56,8 +57,8 @@ public class Mouse : MonoBehaviour
         magnetRigidBody.AddForce(directionOfThrow, ForceMode2D.Impulse);
     }
      private void DespawnMagnet() {       
-        Destroy(activeMagnetList.LastOrDefault());
-        activeMagnetList.Remove(activeMagnetList.LastOrDefault());
+        Destroy(activeMagnetList.FirstOrDefault());
+        activeMagnetList.Remove(activeMagnetList.FirstOrDefault());
         magnetQuantity++;
     }
 
@@ -78,10 +79,10 @@ public class Mouse : MonoBehaviour
           repelingAction = context.ReadValue<float>();
     }
     private void GetMagnetInMap() {
-         RaycastHit2D magnetFinder = Physics2D.BoxCast(target.transform.position, new Vector2(5,5), 110,target.transform.rotation * Vector2.up, 15, magnetLayer);
-         if(magnetFinder) {
+          firstMagnetFound = Physics2D.BoxCast(target.transform.position, new Vector2(5,5), 110,target.transform.rotation * Vector2.up, 15, magnetLayer);
+         
+         if(firstMagnetFound) {
             isMagnetOnRange = true;
-
             
          }
          else {
@@ -89,13 +90,12 @@ public class Mouse : MonoBehaviour
            
          }
     }
-    //* Vas a tener que hacer esto considerablemente más complicado.
-    //* Crear un RayCast desde el personaje hasta el imán, osea, encontrar dónde está el imán. Talvez usar el array de imanes?
-    //* Con el RayCast, poder descubrir el vector2, y por tanto, la dirección a la cual moverte.
-    //* Buena suerte.
     private void MoveIntoTheMagnet() {
-        Vector2 directionOfThrow = target.transform.rotation * new Vector2(100,100);
-        GetComponent<Rigidbody2D>().AddForce(directionOfThrow, ForceMode2D.Impulse);   
+                    
+        Vector2 directionOfThrow = firstMagnetFound.transform.position - transform.position;
+        //directionOfThrow = target.transform.rotation * directionOfThrow;
+        Debug.Log(directionOfThrow);
+        GetComponent<Rigidbody2D>().AddForce(directionOfThrow * strengthOfAction, ForceMode2D.Impulse);
     }
     private void MoveAwayFromTheMagnet() {
         Vector2 directionOfThrow = target.transform.rotation * new Vector2(100,100);

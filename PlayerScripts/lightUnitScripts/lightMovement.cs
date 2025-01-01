@@ -191,7 +191,7 @@ public class lightMovement : MonoBehaviour
         }
 
         //activates basic movement
-        if(!isDashing && !isJumping) {
+        if(!isDashing && IsGrounded() == true) {
             Move();
         }
     }
