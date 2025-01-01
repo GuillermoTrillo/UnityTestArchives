@@ -54,8 +54,11 @@ public class Mouse : MonoBehaviour
         activeMagnetList.Add(Instantiate(magnetPrefab, target.transform.position, rotation));
         ShootMagnet();
     }
-        private void ShootMagnet() {
+    private void ShootMagnet() {
         GameObject lastSpawned = activeMagnetList.LastOrDefault();
+        Rigidbody2D magnetRigidBody = lastSpawned.GetComponent<Rigidbody2D>();
+        Vector2 directionOfThrow = lastSpawned.transform.rotation * new Vector2(0, 50);
+        magnetRigidBody.AddForce(directionOfThrow, ForceMode2D.Impulse);
     }
      private void DespawnMagnet() {       
         Destroy(activeMagnetList.LastOrDefault());
