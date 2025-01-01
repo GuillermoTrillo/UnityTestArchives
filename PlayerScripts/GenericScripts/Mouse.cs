@@ -13,6 +13,11 @@ public class Mouse : MonoBehaviour
     public GameObject magnetPrefab;
     int magnetQuantity = 5;
     List<GameObject> activeMagnetList = new List<GameObject>();
+
+    public LayerMask magnetLayer;
+
+
+
     private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.None;
@@ -38,17 +43,6 @@ public class Mouse : MonoBehaviour
             DespawnMagnet();
         }
     }
-
-    private void LookAt() {
-        Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - target.transform.position;
-
-        float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90;
-
-        rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-        target.transform.rotation = Quaternion.Slerp(target.transform.rotation, rotation, 10 * Time.deltaTime);
-    }
-
     private void SpawnMagnet() {
         magnetQuantity--;
         activeMagnetList.Add(Instantiate(magnetPrefab, target.transform.position, rotation));
@@ -66,9 +60,27 @@ public class Mouse : MonoBehaviour
         magnetQuantity++;
     }
 
+    private void LookAt() {
+        Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - target.transform.position;
+
+        float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90;
+
+        rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        target.transform.rotation = Quaternion.Slerp(target.transform.rotation, rotation, 10 * Time.deltaTime);
+    }
+    private void GetMagnetInMap() {
+         RaycastHit2D hit = Physics2D.BoxCast(target.transform.position, new Vector2(5,5), 110,target.transform.rotation * Vector2.up, 15, magnetLayer);
+         if(hit) {
+            Debug.Log("THATS A MAGNET");
+         }
+         else {
+            Debug.Log("nothing Happens");
+         }
+    }
     private void FixedUpdate() {
-        
         LookAt();
+        GetMagnetInMap();
 
     }
 }
