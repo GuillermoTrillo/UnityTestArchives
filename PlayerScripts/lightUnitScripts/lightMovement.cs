@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class lightMovement : Player
+public class lightMovement : MonoBehaviour
 {
-    Player player = new Player();
+
 
     //*raycast variables
     public Vector2 boxSizeLight;
@@ -145,6 +145,7 @@ public class lightMovement : Player
     //* casts a raycast under the player in the form of a box, to check if he's grounded or not
     public bool IsGrounded() {
         if (Physics2D.BoxCast(transform.position, boxSizeLight, 0, -transform.up, castDistanceLight, groundLayerLight)) {
+            Player.setIsInAir(false);
             return true;
         }
         else {
@@ -191,9 +192,9 @@ public class lightMovement : Player
         if(jumpAction > 0 && coyoteTimeCounter > 0) {
             Jump();
         }
-        
+        Debug.Log(Player.getIsInAir());
         //activates basic movement
-        if(!isDashing && player.getIsInAir() == false) {
+        if(!isDashing && Player.getIsInAir() == false) {
             Move();
         }
     }

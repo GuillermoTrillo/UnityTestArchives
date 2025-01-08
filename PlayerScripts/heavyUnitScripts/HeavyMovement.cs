@@ -137,7 +137,6 @@ public class HeavyMovement : MonoBehaviour
         if ((moveAction.x != runningDirection) && runningAction == 1)  {
             ChangingDirectionsWhileRunning();
         }
-        Debug.Log(coyoteTimeCounter);
 
         if(IsGrounded()) {
             coyoteTimeCounter = coyoteTime;

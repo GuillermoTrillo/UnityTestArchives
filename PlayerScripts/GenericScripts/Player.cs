@@ -2,27 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public static class Player
 {
-    float health = 100;
-    bool isInAir;
+    static float health = 100;
+    static bool isInAir;
 
     // Getter
-    public float getHealth() {
+    public static float getHealth() {
         return health;
     }
 
     // Setter
-    public void setHealth(float h) {
+    public static void setHealth(float h) {
         health = h;
     }
 
     // Getter
-    public bool getIsInAir() {
+    public static bool getIsInAir() {
         return isInAir;
     }
     // Setter
-    public void setIsInAir(bool jump) {
+    public static void setIsInAir(bool jump) {
         isInAir = jump;
     }
 
