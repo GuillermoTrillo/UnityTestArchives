@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class lightMovement : MonoBehaviour
+public class lightMovement : Player
 {
+    Player player = new Player();
+
     //*raycast variables
     public Vector2 boxSizeLight;
     public float castDistanceLight = 1;
@@ -189,9 +191,9 @@ public class lightMovement : MonoBehaviour
         if(jumpAction > 0 && coyoteTimeCounter > 0) {
             Jump();
         }
-
+        
         //activates basic movement
-        if(!isDashing && IsGrounded() == true) {
+        if(!isDashing && player.getIsInAir() == false) {
             Move();
         }
     }

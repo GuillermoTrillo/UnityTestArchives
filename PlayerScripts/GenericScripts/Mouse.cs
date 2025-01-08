@@ -5,8 +5,11 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 
-public class Mouse : MonoBehaviour
+public class Mouse : Player
 {
+    Player player = new Player();
+
+
     public GameObject target; //Assign to the object you want to rotate
     Quaternion rotation;
 
@@ -19,7 +22,7 @@ public class Mouse : MonoBehaviour
     RaycastHit2D firstMagnetFound;
     private float repelingAction;
     private float attractingAction;
-    public float strengthOfAction = 10;
+    private float strengthOfAction = 10;
     private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.None;
@@ -73,10 +76,12 @@ public class Mouse : MonoBehaviour
     }
 
     public void OnAttractingMagnets(InputAction.CallbackContext context) {
-          attractingAction = context.ReadValue<float>();
+        player.setIsInAir(true);
+        attractingAction = context.ReadValue<float>();
     }
     public void OnRepelingMagnets(InputAction.CallbackContext context) {
-          repelingAction = context.ReadValue<float>();
+        player.setIsInAir(true);
+        repelingAction = context.ReadValue<float>();
     }
     private void GetMagnetInMap() {
           firstMagnetFound = Physics2D.BoxCast(target.transform.position, new Vector2(5,5), 110,target.transform.rotation * Vector2.up, 15, magnetLayer);
