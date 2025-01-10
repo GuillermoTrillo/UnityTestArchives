@@ -74,10 +74,17 @@ public class Mouse : MonoBehaviour
     }
 
     public void OnAttractingMagnets(InputAction.CallbackContext context) {
-        attractingAction = context.ReadValue<float>();
+        if (context.performed)
+            attractingAction = 1;
+        else
+            attractingAction = 0;
     }
     public void OnRepelingMagnets(InputAction.CallbackContext context) {
-        repelingAction = context.ReadValue<float>();
+        if (context.performed)
+            repelingAction = 1;
+        else
+            repelingAction = 0;
+        
     }
     private void GetMagnetInMap() {
           firstMagnetFound = Physics2D.BoxCast(target.transform.position, new Vector2(5,5), 110,target.transform.rotation * Vector2.up, 15, magnetLayer);

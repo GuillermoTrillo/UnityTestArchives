@@ -25,7 +25,6 @@ public class lightMovement : MonoBehaviour
 
     //*jump Variables
     float jumpHeight = 15f;
-    bool isJumping = false;
     float coyoteTime = 0.15f;
     float coyoteTimeCounter; 
 
@@ -99,8 +98,7 @@ public class lightMovement : MonoBehaviour
     private IEnumerator DashJump() {
         //defines the variables needed to do the dashjump and stop any other action
         allowToDash = false;
-        isDashing = true;
-        isJumping = true;
+        isDashing = true;       
         jumpHeight = 12;
         dashVelocity = 40f;
         rb2D.velocity = new Vector2(moveAction.x * rb2D.transform.localScale.x * dashVelocity, jumpHeight);
@@ -113,7 +111,6 @@ public class lightMovement : MonoBehaviour
         //restarts the variables
         tr.emitting = false;
         isDashing = false;
-        isJumping = false;
         dashVelocity = 100f;
         jumpHeight = 15f;
     }
