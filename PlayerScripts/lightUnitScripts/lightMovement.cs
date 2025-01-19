@@ -153,7 +153,11 @@ public class lightMovement : MonoBehaviour
     private void OnDrawGizmos() {
         Gizmos.DrawWireCube(transform.position - transform.up * castDistanceLight, boxSizeLight);
     }
-    
+
+    private void stopMovementByMagnet() {
+        if(Player.getisInMagnet() == true)
+            rb2D.velocity = Vector2.zero;
+    }
     //* The Update variable is only used to define CoyoteTime
     private void Update() {
         if(IsGrounded()) {
@@ -166,6 +170,7 @@ public class lightMovement : MonoBehaviour
     }
     //* Fixed Update does all the calls for the movement functions
     private void FixedUpdate() {
+        stopMovementByMagnet();
         //will start the dashjump, or stop any other action, if already in dash
         if(isDashing == true) {
             if(jumpAction > 0 && coyoteTimeCounter > 0) {
@@ -189,7 +194,6 @@ public class lightMovement : MonoBehaviour
         if(jumpAction > 0 && coyoteTimeCounter > 0) {
             Jump();
         }
-        Debug.Log(Player.getIsInAir());
         //activates basic movement
         if(!isDashing && Player.getIsInAir() == false) {
             Move();

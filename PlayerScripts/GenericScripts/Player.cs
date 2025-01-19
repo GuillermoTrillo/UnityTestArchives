@@ -6,6 +6,7 @@ public static class Player
 {
     static float health = 100;
     static bool isInAir;
+    static bool isInMagnet;
 
     // Getter
     public static float getHealth() {
@@ -26,4 +27,11 @@ public static class Player
         isInAir = jump;
     }
 
+    public static bool getisInMagnet() {
+        return isInMagnet;
+    }
+
+    public static void setIsInMagnet(bool magnet) {
+        isInMagnet = magnet;
+    }
 }

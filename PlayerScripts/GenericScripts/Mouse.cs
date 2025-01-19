@@ -18,6 +18,7 @@ public class Mouse : MonoBehaviour
     public LayerMask magnetLayer;
     private bool isMagnetOnRange = false;
     RaycastHit2D firstMagnetFound;
+    RaycastHit2D playerTouchedMagnet;
     private float repelingAction;
     private float attractingAction;
     private float strengthOfAction = 10;
@@ -98,12 +99,22 @@ public class Mouse : MonoBehaviour
            
          }
     }
+    private void FindIfMagnetIsOnTouch() {
+           playerTouchedMagnet = Physics2D.BoxCast(target.transform.position, new Vector2(5,5), 0, new Vector2(0,0), 0.01f, magnetLayer);
+         
+         if(playerTouchedMagnet)
+            Player.setIsInMagnet(true);
+         else 
+            Player.setIsInMagnet(false);
+    }
     private void MoveIntoTheMagnet() {
+        FindIfMagnetIsOnTouch();
         Player.setIsInAir(true);
         Vector2 directionOfThrow = firstMagnetFound.transform.position - transform.position;
         GetComponent<Rigidbody2D>().AddForce(directionOfThrow * strengthOfAction, ForceMode2D.Impulse);
     }
     private void MoveAwayFromTheMagnet() {
+        FindIfMagnetIsOnTouch();
         Player.setIsInAir(true);
         Vector2 directionOfThrow = target.transform.rotation * new Vector2(100,100);
         GetComponent<Rigidbody2D>().AddForce(-directionOfThrow, ForceMode2D.Impulse);
