@@ -90,14 +90,10 @@ public class Mouse : MonoBehaviour
     private void GetMagnetInMap() {
           firstMagnetFound = Physics2D.BoxCast(target.transform.position, new Vector2(5,5), 110,target.transform.rotation * Vector2.up, 15, magnetLayer);
          
-         if(firstMagnetFound) {
-            isMagnetOnRange = true;
-            
-         }
-         else {
+         if(firstMagnetFound) 
+            isMagnetOnRange = true;  
+         else 
             isMagnetOnRange = false;
-           
-         }
     }
     private void FindIfMagnetIsOnTouch() {
            playerTouchedMagnet = Physics2D.BoxCast(target.transform.position, new Vector2(5,5), 0, new Vector2(0,0), 0.01f, magnetLayer);
@@ -108,13 +104,13 @@ public class Mouse : MonoBehaviour
             Player.setIsInMagnet(false);
     }
     private void MoveIntoTheMagnet() {
-        FindIfMagnetIsOnTouch();
+        //FindIfMagnetIsOnTouch();
         Player.setIsInAir(true);
         Vector2 directionOfThrow = firstMagnetFound.transform.position - transform.position;
         GetComponent<Rigidbody2D>().AddForce(directionOfThrow * strengthOfAction, ForceMode2D.Impulse);
     }
     private void MoveAwayFromTheMagnet() {
-        FindIfMagnetIsOnTouch();
+       // FindIfMagnetIsOnTouch();
         Player.setIsInAir(true);
         Vector2 directionOfThrow = target.transform.rotation * new Vector2(100,100);
         GetComponent<Rigidbody2D>().AddForce(-directionOfThrow, ForceMode2D.Impulse);
