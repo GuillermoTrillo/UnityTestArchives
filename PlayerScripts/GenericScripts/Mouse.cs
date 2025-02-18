@@ -7,26 +7,32 @@ using UnityEngine.InputSystem;
 
 public class Mouse : MonoBehaviour
 {
-
-    public GameObject target; //Assign to the object you want to rotate
+    // Related to the light that follows the Player
+    public GameObject target;
     Quaternion rotation;
 
+    //related to the magnet shooting
     public GameObject magnetPrefab;
     int magnetQuantity = 5;
     List<GameObject> activeMagnetList = new List<GameObject>();
-
     public LayerMask magnetLayer;
+
+    //related to the magnet actions
     private bool isMagnetOnRange = false;
     RaycastHit2D firstMagnetFound;
     RaycastHit2D playerTouchedMagnet;
     private float repelingAction;
     private float attractingAction;
-    private float strengthOfAction = 10;
+    private int strengthOfMagnetAction = 10;
+
+    //* simply gets the exact place of the cursor by locking it on the center and unlocking it
     private void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.None;
     }   
 
+        //* Here are the shooting magnets' related functions
+    //* Gets the button presses
     public void OnShootingMagnets(InputAction.CallbackContext context) {
         if(magnetQuantity == 0) {
             return;
@@ -47,6 +53,7 @@ public class Mouse : MonoBehaviour
             DespawnMagnet();
         }
     }
+    //* Spawns the magnet and saves it on the list
     private void SpawnMagnet() {
         magnetQuantity--;
         activeMagnetList.Add(Instantiate(magnetPrefab, target.transform.position, rotation));
@@ -96,23 +103,23 @@ public class Mouse : MonoBehaviour
             isMagnetOnRange = false;
     }
     private void FindIfMagnetIsOnTouch() {
-           playerTouchedMagnet = Physics2D.BoxCast(target.transform.position, new Vector2(5,5), 0, new Vector2(0,0), 0.01f, magnetLayer);
-         
-         if(playerTouchedMagnet)
+        playerTouchedMagnet = Physics2D.BoxCast(transform.position, new Vector2(1,1), 0, new Vector2(0,0), 0.01f, magnetLayer);
+        
+        if(playerTouchedMagnet)
             Player.setIsInMagnet(true);
-         else 
+        else
             Player.setIsInMagnet(false);
     }
     private void MoveIntoTheMagnet() {
-        //FindIfMagnetIsOnTouch();
+        FindIfMagnetIsOnTouch();
         Player.setIsInAir(true);
-        Vector2 directionOfThrow = firstMagnetFound.transform.position - transform.position;
-        GetComponent<Rigidbody2D>().AddForce(directionOfThrow * strengthOfAction, ForceMode2D.Impulse);
+        Vector2 directionOfThrow = (firstMagnetFound.transform.position - transform.position) * strengthOfMagnetAction;
+        GetComponent<Rigidbody2D>().AddForce(directionOfThrow, ForceMode2D.Impulse);
     }
     private void MoveAwayFromTheMagnet() {
-       // FindIfMagnetIsOnTouch();
+        FindIfMagnetIsOnTouch();
         Player.setIsInAir(true);
-        Vector2 directionOfThrow = target.transform.rotation * new Vector2(100,100);
+        Vector2 directionOfThrow = (firstMagnetFound.transform.position - transform.position) * strengthOfMagnetAction;
         GetComponent<Rigidbody2D>().AddForce(-directionOfThrow, ForceMode2D.Impulse);
     }
     private void FixedUpdate() {
@@ -126,6 +133,9 @@ public class Mouse : MonoBehaviour
                 MoveIntoTheMagnet();
             }
         }
-        
+        if(attractingAction == 0 && repelingAction == 0 ) {
+            Player.setIsInMagnet(false);
+        }
+
     }
 }

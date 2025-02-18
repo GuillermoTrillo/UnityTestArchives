@@ -155,8 +155,12 @@ public class lightMovement : MonoBehaviour
     }
 
     private void stopMovementByMagnet() {
-        if(Player.getisInMagnet() == true)
+        if(Player.getisInMagnet() == true) {
             rb2D.velocity = Vector2.zero;
+            rb2D.gravityScale = 0;
+        }
+        else
+            rb2D.gravityScale = 3;
     }
     //* The Update variable is only used to define CoyoteTime
     private void Update() {
