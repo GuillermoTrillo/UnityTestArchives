@@ -23,7 +23,7 @@ public class Mouse : MonoBehaviour
     RaycastHit2D playerTouchedMagnet;
     private float repelingAction;
     private float attractingAction;
-    private int strengthOfMagnetAction = 10;
+    private int strengthOfMagnetAction = 6;
 
     //* simply gets the exact place of the cursor by locking it on the center and unlocking it
     private void Start() {
@@ -103,7 +103,7 @@ public class Mouse : MonoBehaviour
             isMagnetOnRange = false;
     }
     private void FindIfMagnetIsOnTouch() {
-        playerTouchedMagnet = Physics2D.BoxCast(transform.position, new Vector2(1,1), 0, new Vector2(0,0), 0.01f, magnetLayer);
+        playerTouchedMagnet = Physics2D.BoxCast(transform.position, new Vector2(1.5f, 1.5f), 0, new Vector2(0,0), 0.01f, magnetLayer);
         
         if(playerTouchedMagnet)
             Player.setIsInMagnet(true);

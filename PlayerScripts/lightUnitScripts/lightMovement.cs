@@ -3,19 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class lightMovement : MonoBehaviour
-{
-
-
-    //*raycast variables
-    public Vector2 boxSizeLight;
-    public float castDistanceLight = 1;
-    public LayerMask groundLayerLight;
-
-    //*the action was called with the button click
-    Vector2 moveAction;
-    float jumpAction;
-    float dashAction;
+public class lightMovement : PlayerMovement
+{ 
 
     //*movement Variables
     float maximumSpeed = 750;
@@ -37,29 +26,6 @@ public class lightMovement : MonoBehaviour
     bool allowToDash = true;
     bool isDashing = false;
     //JumpDash Variables
-    
-    
-    //*this gameObject variables
-    GameObject thisGameObject;
-    private Rigidbody2D rb2D;
-    TrailRenderer tr;
-
-    void Start() {
-        thisGameObject = gameObject;
-        tr = thisGameObject.GetComponent<TrailRenderer>();
-        rb2D = thisGameObject.GetComponent<Rigidbody2D>();
-    }
-    
-    //* OnX functions receive the input call and transfer it to a variable
-    public void OnMove(InputAction.CallbackContext context) {
-        moveAction = context.ReadValue<Vector2>();
-    }
-    public void OnJump(InputAction.CallbackContext context) {
-        jumpAction = context.ReadValue<float>();
-    }
-    public void OnDash(InputAction.CallbackContext context) {
-        dashAction = context.ReadValue<float>();
-    } 
 
     //* Move function moves the character with a certain amount of acceleration
     private void Move() {
@@ -140,19 +106,8 @@ public class lightMovement : MonoBehaviour
     }
     
     //* casts a raycast under the player in the form of a box, to check if he's grounded or not
-    public bool IsGrounded() {
-        if (Physics2D.BoxCast(transform.position, boxSizeLight, 0, -transform.up, castDistanceLight, groundLayerLight)) {
-            Player.setIsInAir(false);
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+    
     //* makes the raycast visible in-Scene mode
-    private void OnDrawGizmos() {
-        Gizmos.DrawWireCube(transform.position - transform.up * castDistanceLight, boxSizeLight);
-    }
 
     private void stopMovementByMagnet() {
         if(Player.getisInMagnet() == true) {
@@ -193,7 +148,6 @@ public class lightMovement : MonoBehaviour
                 amountOfDashes = amountOfDashes + 0.05f;
             }
         }
-        
         //activates the jump
         if(jumpAction > 0 && coyoteTimeCounter > 0) {
             Jump();

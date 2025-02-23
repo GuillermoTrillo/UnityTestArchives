@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class HeavyMovement : MonoBehaviour
+public class HeavyMovement : PlayerMovement
 {
 
-    //*raycast variables
-    private Vector2 boxSize;
-    private float castDistance = 0.8f;
-    [SerializeField] private LayerMask groundLayer;
+    
 
 
     //*the action was called with the button click
-    Vector2 moveAction;
-    float jumpAction;
     float runningAction;
 
     //*movement Variables
@@ -26,33 +21,10 @@ public class HeavyMovement : MonoBehaviour
 
     //*jump variables
     float jumpHeight = 17f;
-    float coyoteTime = 0.1f;
+    float coyoteTime = 0.15f;
     float coyoteTimeCounter; 
 
 
-    //*this gameObject variables
-    GameObject thisGameObject;
-    private Rigidbody2D rb2D;
-    TrailRenderer tr;
-
-
-    //* the Start() function will simply define the components in their respective variables
-    private void Start() {
-        thisGameObject = gameObject;
-        tr = thisGameObject.GetComponent<TrailRenderer>();
-        rb2D = thisGameObject.GetComponent<Rigidbody2D>();
-        boxSize = new Vector2(0.54f, 0.44f);
-    }
-
-    //* The OnSomething functions receive the InputAction call, and they transform it into 
-    //* variables which can be used later for button recognition
-    public void OnMove(InputAction.CallbackContext context) 
-    {
-        moveAction = context.ReadValue<Vector2>();
-    }
-    public void OnJump(InputAction.CallbackContext context) {
-        jumpAction = context.ReadValue<float>();
-    }
     public void OnRunning(InputAction.CallbackContext context) {
         runningDirection = moveAction.x;
         if(context.performed) {
@@ -120,14 +92,7 @@ public class HeavyMovement : MonoBehaviour
 
     }
     //* casts a raycast under the player in the form of a box, to check if he's grounded or not
-    public bool IsGrounded() {
-        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, groundLayer)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+
     //* makes the raycast visible.
     private void OnDrawGizmos() {
         Gizmos.DrawWireCube(transform.position - transform.up* castDistance, boxSize);
@@ -138,6 +103,7 @@ public class HeavyMovement : MonoBehaviour
             ChangingDirectionsWhileRunning();
         }
 
+        
         if(IsGrounded()) {
             coyoteTimeCounter = coyoteTime;
         } else {
