@@ -40,6 +40,8 @@ public class PlayerMovement : MonoBehaviour
     protected void OnDash(InputAction.CallbackContext context) {
         dashAction = context.ReadValue<float>();
     } 
+    
+    //* casts a raycast under the player in the form of a box, to check if he's grounded or not
     public bool IsGrounded() {
         if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, groundLayer)) {
             Player.setIsInAir(false);

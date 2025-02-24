@@ -104,10 +104,6 @@ public class lightMovement : PlayerMovement
         }
         allowToDash = true;
     }
-    
-    //* casts a raycast under the player in the form of a box, to check if he's grounded or not
-    
-    //* makes the raycast visible in-Scene mode
 
     private void stopMovementByMagnet() {
         if(Player.getisInMagnet() == true) {

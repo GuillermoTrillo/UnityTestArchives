@@ -91,19 +91,10 @@ public class HeavyMovement : PlayerMovement
         }
 
     }
-    //* casts a raycast under the player in the form of a box, to check if he's grounded or not
-
-    //* makes the raycast visible.
-    private void OnDrawGizmos() {
-        Gizmos.DrawWireCube(transform.position - transform.up* castDistance, boxSize);
-    }
-
     private void Update() {  
         if ((moveAction.x != runningDirection) && runningAction == 1)  {
             ChangingDirectionsWhileRunning();
         }
-
-        
         if(IsGrounded()) {
             coyoteTimeCounter = coyoteTime;
         } else {
