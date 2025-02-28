@@ -16,7 +16,7 @@ public class Mouse : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.lockState = CursorLockMode.None;
     }   
-        
+            
     private void LookAt() {
         Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - target.transform.position;
 
