@@ -26,17 +26,23 @@ public class HeavyMagnet : PlayerMagnet
             repelingAction = 0;
         
     }
+
+    private void RepelTheTarget() {
+        
+    }
+    private void AttractTheTarget() {
+
+    }
     void Update()
     {
         GetMagnetInMap();
 
-
         if(isMagnetOnRange) {
             if(repelingAction > 0 ) {
-                //todo MoveAwayFromTheMagnet();
+                RepelTheTarget();
             }
             if(attractingAction > 0) {
-                //todo MoveIntoTheMagnet();
+                AttractTheTarget();
             }
         }
         if(attractingAction == 0 && repelingAction == 0 ) {
