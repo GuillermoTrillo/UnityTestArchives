@@ -31,13 +31,13 @@ public class PlayerMovement : MonoBehaviour
     }
     
         //* OnX functions receive the input call and transfer it to a variable
-    protected void OnMove(InputAction.CallbackContext context) {
+    public void OnMove(InputAction.CallbackContext context) {
         moveAction = context.ReadValue<Vector2>();
     }
-    protected void OnJump(InputAction.CallbackContext context) {
+    public void OnJump(InputAction.CallbackContext context) {
         jumpAction = context.ReadValue<float>();
     }
-    protected void OnDash(InputAction.CallbackContext context) {
+    public void OnDash(InputAction.CallbackContext context) {
         dashAction = context.ReadValue<float>();
     } 
     
