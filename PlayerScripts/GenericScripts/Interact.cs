@@ -18,11 +18,9 @@ public class Interact : MonoBehaviour
     public void Interacting() {
         OnInteraction?.Invoke();
     }
-    // Update is called once per frame
 
     void Update()
     {
-        Debug.Log(interactAction + " and "+hasCollision);
         if(interactAction > 0){
             Interacting();
         }
