@@ -12,7 +12,7 @@ public class HeavyMagnet : PlayerMagnet
 
     private float repelingAction;
     private float attractingAction;
-    private int strengthOfMagnetAction = 1000;
+    private int strengthOfMagnetAction = 10000;
     Rigidbody2D attachedObject;
     public void OnAttractingMagnets(InputAction.CallbackContext context) 
     {
@@ -33,13 +33,13 @@ public class HeavyMagnet : PlayerMagnet
 
     private void RepelTheTarget() 
     {
-        Vector2 directionOfAttraction = (attachedObject.transform.position - transform.position) * strengthOfMagnetAction;
+        Vector2 directionOfAttraction = (attachedObject.transform.position - transform.position).normalized * strengthOfMagnetAction;
         //Debug.Log(directionOfAttraction);
         attachedObject.AddForce(directionOfAttraction, ForceMode2D.Force);
     }
     private void AttractTheTarget() 
     {
-        Vector2 directionOfAttraction = (attachedObject.transform.position - transform.position) * strengthOfMagnetAction;
+        Vector2 directionOfAttraction = (attachedObject.transform.position - transform.position).normalized * strengthOfMagnetAction;
         attachedObject.AddForce(-directionOfAttraction, ForceMode2D.Force);
     }
     

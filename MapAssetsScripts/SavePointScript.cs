@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
+using Cinemachine;
 
 public class SavePointScript : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class SavePointScript : MonoBehaviour
     [SerializeField] private GameObject CHARACTERS;
     [SerializeField] private GameObject lightPrefab;
     [SerializeField] private GameObject heavyPrefab;
+    [SerializeField] private GameObject camera;
     void Start()
     {
         interactingAction = () => { 
@@ -31,11 +33,13 @@ public class SavePointScript : MonoBehaviour
     private Action test() {
         if(lightPrefab.CompareTag(player.tag)) {
             Destroy(player);
-            Instantiate(heavyPrefab, player.transform.position, player.transform.rotation, CHARACTERS.transform);
+            GameObject newPlayer = Instantiate(heavyPrefab, player.transform.position, player.transform.rotation, CHARACTERS.transform);
+            camera.GetComponent<CinemachineVirtualCamera>().Follow = newPlayer.transform;
         }
         else {
             Destroy(player);
-            Instantiate(lightPrefab, player.transform.position, player.transform.rotation, CHARACTERS.transform);
+            GameObject newPlayer = Instantiate(lightPrefab, player.transform.position, player.transform.rotation, CHARACTERS.transform);
+            camera.GetComponent<CinemachineVirtualCamera>().Follow = newPlayer.transform;
         }
         
         return null;

@@ -12,7 +12,7 @@ public class LightMagnet : PlayerMagnet
     RaycastHit2D playerTouchedMagnet;
     private float repelingAction;
     private float attractingAction;
-    private int strengthOfMagnetAction = 3;
+     private int strengthOfMagnetAction = 45;
 
     public void OnAttractingMagnets(InputAction.CallbackContext context) {
         if (context.performed)
@@ -39,13 +39,13 @@ public class LightMagnet : PlayerMagnet
     private void MoveIntoTheMagnet() {
         FindIfMagnetIsOnTouch();
         Player.setIsInAir(true);
-        Vector2 directionOfThrow = (firstMagnetFound.transform.position - transform.position) * strengthOfMagnetAction;
+        Vector2 directionOfThrow = (firstMagnetFound.transform.position - transform.position).normalized * strengthOfMagnetAction;
         GetComponent<Rigidbody2D>().AddForce(directionOfThrow, ForceMode2D.Impulse);
     }
     private void MoveAwayFromTheMagnet() {
         FindIfMagnetIsOnTouch();
         Player.setIsInAir(true);
-        Vector2 directionOfThrow = (firstMagnetFound.transform.position - transform.position) * strengthOfMagnetAction;
+        Vector2 directionOfThrow = (firstMagnetFound.transform.position - transform.position).normalized * strengthOfMagnetAction;
         GetComponent<Rigidbody2D>().AddForce(-directionOfThrow, ForceMode2D.Impulse);
     }
 
