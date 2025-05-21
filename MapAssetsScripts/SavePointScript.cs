@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Unity.VisualScripting;
 using Cinemachine;
 
 public class SavePointScript : MonoBehaviour
@@ -13,7 +10,7 @@ public class SavePointScript : MonoBehaviour
     [SerializeField] private GameObject CHARACTERS;
     [SerializeField] private GameObject lightPrefab;
     [SerializeField] private GameObject heavyPrefab;
-    [SerializeField] private GameObject camera;
+    [SerializeField] private new GameObject camera;
     void Start()
     {
         interactingAction = () => { 
