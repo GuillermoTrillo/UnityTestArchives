@@ -11,9 +11,13 @@ public class Interact : MonoBehaviour
     float interactAction;
     float hasCollision;
 
-    public void onInteraction(InputAction.CallbackContext context) {
-        interactAction = context.ReadValue<float>();
-    }
+    public void onInteraction(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            interactAction = 1;
+        else
+            interactAction = 0;   
+     }
 
     public void Interacting() {
         OnInteraction?.Invoke();
