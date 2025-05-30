@@ -8,8 +8,10 @@ public static class Player
     static bool isInAir;
     static bool isInMagnet;
 
+    public static float maxSpeed = 20f;
     // Getter
-    public static float getHealth() {
+    public static float getHealth()
+    {
         return health;
     }
 

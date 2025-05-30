@@ -45,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     public bool IsGrounded() {
         if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, groundLayer)) {
             Player.setIsInAir(false);
+            Player.maxSpeed = 20f;
             return true;
         }
         else {

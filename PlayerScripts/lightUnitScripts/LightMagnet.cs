@@ -12,15 +12,26 @@ public class LightMagnet : PlayerMagnet
     RaycastHit2D playerTouchedMagnet;
     private float repelingAction;
     private float attractingAction;
-    private int strengthOfMagnetAction = 20;
+    private int strengthOfMagnetAction = 30;
 
-    public void OnAttractingMagnets(InputAction.CallbackContext context) {
+    public void OnAttractingMagnets(InputAction.CallbackContext context)
+    {
+        if (context.started) {
+            if(Player.maxSpeed < 100)
+                Player.maxSpeed += 20f;
+        }
+        
         if (context.performed)
-            attractingAction = 1;
-        else
-            attractingAction = 0;
+                attractingAction = 1;
+            else
+                attractingAction = 0;
     }
     public void OnRepelingMagnets(InputAction.CallbackContext context) {
+        if (context.started) {
+            if(Player.maxSpeed < 100)
+                Player.maxSpeed += 20f;
+        }
+        
         if (context.performed)
             repelingAction = 1;
         else
@@ -36,18 +47,24 @@ public class LightMagnet : PlayerMagnet
         else
             Player.setIsInMagnet(false);
     }
-    private void MoveIntoTheMagnet() {
+    private void MoveIntoTheMagnet()
+    {
         FindIfMagnetIsOnTouch();
         Player.setIsInAir(true);
-        Debug.Log(GetComponent<Rigidbody2D>().velocity);
         Vector2 directionOfThrow = (firstMagnetFound.transform.position - transform.position).normalized * strengthOfMagnetAction;
         GetComponent<Rigidbody2D>().AddForce(directionOfThrow, ForceMode2D.Impulse);
+
+        GetComponent<Rigidbody2D>().velocity = Vector2.ClampMagnitude( GetComponent<Rigidbody2D>().velocity, Player.maxSpeed);
+
     }
-    private void MoveAwayFromTheMagnet() {
+    private void MoveAwayFromTheMagnet()
+    {
         FindIfMagnetIsOnTouch();
         Player.setIsInAir(true);
         Vector2 directionOfThrow = (firstMagnetFound.transform.position - transform.position).normalized * strengthOfMagnetAction;
         GetComponent<Rigidbody2D>().AddForce(-directionOfThrow, ForceMode2D.Impulse);
+
+        GetComponent<Rigidbody2D>().velocity = Vector2.ClampMagnitude( GetComponent<Rigidbody2D>().velocity, Player.maxSpeed);
     }
 
     void Update()
