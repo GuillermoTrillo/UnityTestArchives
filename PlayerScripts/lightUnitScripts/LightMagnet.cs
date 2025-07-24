@@ -26,10 +26,11 @@ public class LightMagnet : PlayerMagnet
             else
                 attractingAction = 0;
     }
-    public void OnRepelingMagnets(InputAction.CallbackContext context) {
+    public void OnRepelingMagnets(InputAction.CallbackContext context)
+    {
         if (context.started) {
             if(Player.maxSpeed < 100)
-                Player.maxSpeed += 20f;
+                Player.maxSpeed += 15f;
         }
         
         if (context.performed)
@@ -39,7 +40,8 @@ public class LightMagnet : PlayerMagnet
         
     }
     
-    private void FindIfMagnetIsOnTouch() {
+    private void FindIfMagnetIsOnTouch()
+    {
         playerTouchedMagnet = Physics2D.BoxCast(transform.position, new Vector2(1.5f, 1.5f), 0, new Vector2(0,0), 0.01f, magnetLayer);
         
         if(playerTouchedMagnet)
